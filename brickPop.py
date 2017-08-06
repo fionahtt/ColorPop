@@ -4,12 +4,46 @@
 # Section: B
 # Andrew ID: fthendea
 ######################################
+from tkinter import *
 
 class brickPop(object):
-
+    
+    def drawHomeScreen(canvas, data):
+        title= PhotoImage(file = "colorpoptitle.gif")
+        label = Label(image=title)
+        label.image = title
+        label.pack()
+        canvas.create_image(0,0, anchor = NW, image = label.image)
+        canvas.create_line(20, 120, 580, 120, fill = "black")
+        
+        play= PhotoImage(file = "play.gif")
+        label = Label(image=play)
+        label.image = play
+        label.pack()
+        canvas.create_image(175,175, anchor = NW, image = label.image)
+        
+        timed= PhotoImage(file = "timed.gif")
+        label = Label(image=timed)
+        label.image = timed
+        label.pack()
+        canvas.create_image(data.timedX,data.timedY, anchor = NW, image = label.image)
+    
+        tutorial= PhotoImage(file = "tutorial.gif")
+        label = Label(image=tutorial)
+        label.image = tutorial
+        label.pack()
+        canvas.create_image(data.tutorialX,data.tutorialY, anchor = NW, image =         label.image)
+        
+    def initHomeScreen(data):
+        data.timedX = 50
+        data.timedY = 450
+        data.tutorialX = 325
+        data.tutorialY = 450
+        data.boxWidth = 241
+        data.boxHeight = 246
 
     def init(data):
-        pass
+        initHomeScreen(data)
         
     def mousePressed(event, data):
         pass
@@ -21,7 +55,7 @@ class brickPop(object):
         pass
     
     def redrawAll(canvas, data):
-        pass
+        drawHomeScreen(canvas, data)
             
     def run(self):
         def redrawAllWrapper(canvas, data):
@@ -48,11 +82,11 @@ class brickPop(object):
         class Struct(object): pass
         data = Struct()
         data.width = 600
-        data.height = 775
+        data.height = 750
         data.timerDelay = 100 # milliseconds
         init(data)
         # create the root and the canvas
-        root = Tk()
+        root = Toplevel()
         canvas = Canvas(root, width=data.width, height=data.height)
         canvas.pack()
         # set up events
