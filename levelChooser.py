@@ -7,7 +7,6 @@
 from tkinter import *
 
 import playGameBoard
-import brickPop
 
 class levelChooser(object):
     
