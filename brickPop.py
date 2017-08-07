@@ -43,14 +43,18 @@ class brickPop(object):
         self.tutorialY = 450
         self.boxWidth = 241
         self.boxHeight = 246
-        self.levels = False
+        #self.levels = False
+        self.levelsPage = None
 
     def init(self):
         self.initHomeScreen()
         
     def mousePressed(self, event):
-        if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
-            self.levels = True
+        if (self.levelsPage == None):
+            if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
+                self.levelsPage = levelChooser.levelChooser()
+        else:
+            self.levelsPage.mousePressed(event)
     
     def keyPressed(self, event):
         pass
@@ -59,9 +63,8 @@ class brickPop(object):
         pass
     
     def redrawAll(self):
-        if (self.levels):
-            levels = levelChooser.levelChooser()
-            levels.drawLevels(self.canvas)
+        if (self.levelsPage != None):
+            self.levelsPage.drawLevels(self.canvas)
         else:
             self.drawHomeScreen()
 

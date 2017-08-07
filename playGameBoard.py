@@ -55,6 +55,7 @@ class playGameBoard(object):
         self.boardFinished = False
         self.gameOver = False
         self.score = 0
+        self.sectionSize = 1
         if (self.level == "EASY"):
             self.numColors = 2
         elif (self.level == "MEDIUM"):
@@ -76,10 +77,33 @@ class playGameBoard(object):
         #depending on game number, make board harder
     
     def checkSection(self, row, col):
-        pass
+        while (self.checkColor(row, col, row, col-1)):
+            row-=1
+        while(self.checkColor(row, col, row, col+1)):
+            row+=1
+            self.sectionSize +=1
+        
+        
+        if (self.level == "EASY"):
+            if(self.sectionSize > 20-self.game or self.sectionSize<4):
+                return False
+        elif (self.level == "MEDIUM"):
+            if(self.sectionSize > 15-self.game or self.sectionSize<3):
+                return False
+        elif(self.level == "HARD"):
+            if(self.sectionSize > 10-self.game or self.sectionSize<2):
+                return False
+    
+    def checkColor(self, row1, col1, row2, col2):
+        if(self.isValid(row1, col1) and self.isValid(row2, col2)):
+            if(self.gameBoard[row1][col1] == self.gameBoard[row2][col2]):
+                return True
+        return False
         
     def isValid(self, row, col):
-        if (self.gameBoard[row][col] == 0):
+        if (row<0 or row>9 or col<0 or col>9):
+            return False
+        elif (self.gameBoard[row][col] == 0):
             return False
         return True
     
@@ -87,7 +111,7 @@ class playGameBoard(object):
         pass
         
     def mousePressed(self, event):
-        #go to game board
+        #start playing game
         pass
     
     def timerFired(self):

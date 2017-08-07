@@ -5,6 +5,7 @@
 # Andrew ID: fthendea
 ######################################
 from tkinter import *
+import playGameBoard
 
 class levelChooser(object):
     
@@ -14,22 +15,27 @@ class levelChooser(object):
         label.image = levels
         label.pack()
         canvas.create_image(0, 30, anchor = NW, image = label.image)
-        
-        root.bind("<Button-1>", lambda event:
-                                self.mousePressedWrapper(event))
 
     def init(self):
-        pass
+        self.gameBoard = None
                 
     def mousePressed(self, event):
         #go to game board
-        pass
+        if (self.gameBoard == None):
+            #coordinates
+            self.gameBoard = playGameBoard.playGameBoard()
+        else:
+            self.gameBoard.mousePressed(event)
     
     def timerFired(self):
         pass
     
     def redrawAll(self):
-        self.drawLevels(self.canvas)
+        if(self.gameBoard != None):
+            self.gameBoard.drawGameBoard(self.canvas)
+        else:
+            self.drawLevels(self.canvas)
+        
 
     def redrawAllWrapper(self):
         self.canvas.delete(ALL)
