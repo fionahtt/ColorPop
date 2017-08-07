@@ -76,28 +76,27 @@ class playGameBoard(object):
     
     def checkSection(self, row, col):
         #return True
-        self.sectionSize = 0
+        self.sectionSize = 1
         newRow, newCol = self.goTopLeft(row, col)[0], self.goTopLeft(row, col)[1]
         newCol = self.goRight(newRow, newCol)
         newCol = self.goLeft(newRow, newCol)
         
         while(self.goDown(newRow, newCol) != -1):
-            newRow, newCol = self.goDown(newRow, newCol)[0], 
-            self.goDown(newRow, newCol)[1]
+            newRow, newCol = self.goDown(newRow, newCol)[0], self.goDown(newRow, newCol)[1]
             newCol = self.goRight(newRow, newCol)
             newCol = self.goLeft(newRow, newCol)
         
+        
         if (self.level == "EASY"):
-            if(self.sectionSize > 20-self.game or self.sectionSize<4):
+            if(self.sectionSize > 20-self.game): #or self.sectionSize<4):
                 return False
         elif (self.level == "MEDIUM"):
-            if(self.sectionSize > 15-self.game or self.sectionSize<3):
+            if(self.sectionSize > 15-self.game): #or self.sectionSize<3):
                 return False
         elif(self.level == "HARD"):
-            if(self.sectionSize > 10-self.game or self.sectionSize<2):
+            if(self.sectionSize > 10-self.game): #or self.sectionSize<2):
                 return False
         return True
-                
     
     def checkColor(self, row1, col1, row2, col2):
         if(self.isValid(row1, col1) and self.isValid(row2, col2)):
@@ -116,23 +115,26 @@ class playGameBoard(object):
         while (self.checkColor(row, col, row, col+1)):
             col+=1
             self.sectionSize +=1
+
         return col
         
     def goDown(self, row, col):
         if (self.checkColor(row, col, row+1, col)):
             row +=1
             col = self.goLeft(row, col)
+
             return (row, col)
 
         else:
-            if(not self.checkColor(row, col, row, col+1):
+            if(not self.checkColor(row, col, row, col+1)):
                 return -1
             else:
                 col+=1
-                self.goDown(row, col)
-        
+                return self.goDown(row, col)
+     
     def goTopLeft(self, row, col):
         col = self.goLeft(row, col)
+        
         newRow = self.goTopRow(row, col)
         newCol = self.goLeft(newRow, col)
         return (newRow, newCol)
@@ -146,13 +148,13 @@ class playGameBoard(object):
         if (self.checkColor(row, col, row-1, col)):
             row -=1
             col = self.goLeft(row, col)
-            self.goTopRow(row, col)
+            return self.goTopRow(row, col)
         else:
-            if(not self.checkColor(row, col, row, col+1):
-                return row
+            if(not self.checkColor(row, col, row, col+1)):
+                return int(row)
             else:
                 col+=1
-                self.goTopRow(row, col)
+                return self.goTopRow(row, col)
     
     def playGame(self):
         pass
