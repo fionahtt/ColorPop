@@ -43,10 +43,9 @@ class brickPop(object):
         self.tutorialY = 450
         self.boxWidth = 241
         self.boxHeight = 246
-        #self.levels = False
         self.levelsPage = None
 
-    def init(self):
+    def __init__(self):
         self.initHomeScreen()
         
     def mousePressed(self, event):
@@ -93,7 +92,7 @@ class brickPop(object):
         self.width = 600
         self.height = 750
         self.timerDelay = 100 # milliseconds
-        self.init()
+        #self.init()
         # create the root and the canvas
         root = Toplevel()
         self.canvas = Canvas(root, width=self.width, height=self.height)

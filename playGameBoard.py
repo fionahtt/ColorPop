@@ -6,6 +6,7 @@
 ######################################
 from tkinter import *
 import random
+import levelChooser
 
 class playGameBoard(object):
     
@@ -40,7 +41,7 @@ class playGameBoard(object):
         canvas.create_text(30, 50, anchor = NW, text = "DIFFICULTY: " + self.level, fill = "black", font = "Verdana 20")
         canvas.create_text(400, 50, anchor = NW, text = "SCORE: " + str(self.score), fill = "black", font = "Verdana 20")
 
-    def init(self):
+    def __init__(self):
         self.startX = 30
         self.startY = 145
         self.size = 10
@@ -122,9 +123,7 @@ class playGameBoard(object):
         if (self.checkColor(row, col, row+1, col)):
             row +=1
             col = self.goLeft(row, col)
-
             return (row, col)
-
         else:
             if(not self.checkColor(row, col, row, col+1)):
                 return -1
@@ -161,7 +160,7 @@ class playGameBoard(object):
         
     def mousePressed(self, event):
         #start playing game
-        pass
+        print("hello!!")
     
     def timerFired(self):
         if (not self.gameOver):
@@ -193,7 +192,7 @@ class playGameBoard(object):
         self.width = 600
         self.height = 750
         self.timerDelay = 100 # milliseconds
-        self.init()
+        #self.init()
         # create the root and the canvas
         root = Toplevel()
         self.canvas = Canvas(root, width=self.width, height=self.height)
