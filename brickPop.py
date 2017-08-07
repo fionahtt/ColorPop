@@ -49,8 +49,8 @@ class brickPop(object):
         self.initHomeScreen()
         
     def mousePressed(self, event):
-        levels = levelChooser.levelChooser()
-        levels.runLevels()
+        if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
+            self.levels = True
     
     def keyPressed(self, event):
         pass
@@ -59,11 +59,11 @@ class brickPop(object):
         pass
     
     def redrawAll(self):
-       # if (self.levels):
-        #    levels = levelChooser.levelChooser()
-         #   levels.drawLevels()
-        #else:
-        self.drawHomeScreen()
+        if (self.levels):
+            levels = levelChooser.levelChooser()
+            levels.drawLevels(self.canvas)
+        else:
+            self.drawHomeScreen()
 
     def redrawAllWrapper(self):
         self.canvas.delete(ALL)

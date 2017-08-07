@@ -8,12 +8,12 @@ from tkinter import *
 
 class levelChooser(object):
     
-    def drawLevels(self):
+    def drawLevels(self, canvas):
         levels= PhotoImage(file = "levels.gif")
         label = Label(image=levels)
         label.image = levels
         label.pack()
-        self.canvas.create_image(0, 30, anchor = NW, image = label.image)
+        canvas.create_image(0, 30, anchor = NW, image = label.image)
 
     def init(self):
         pass
@@ -26,7 +26,7 @@ class levelChooser(object):
         pass
     
     def redrawAll(self):
-        self.drawLevels()
+        self.drawLevels(self.canvas)
 
     def redrawAllWrapper(self):
         self.canvas.delete(ALL)
