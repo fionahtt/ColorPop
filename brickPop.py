@@ -6,6 +6,8 @@
 ######################################
 from tkinter import *
 
+import levelChooser
+
 class brickPop(object):
     
     def drawHomeScreen(self):
@@ -41,12 +43,14 @@ class brickPop(object):
         self.tutorialY = 450
         self.boxWidth = 241
         self.boxHeight = 246
+        self.levels = False
 
     def init(self):
         self.initHomeScreen()
         
     def mousePressed(self, event):
-        #levelChooser()
+        levels = levelChooser.levelChooser()
+        levels.runLevels()
     
     def keyPressed(self, event):
         pass
@@ -55,6 +59,10 @@ class brickPop(object):
         pass
     
     def redrawAll(self):
+       # if (self.levels):
+        #    levels = levelChooser.levelChooser()
+         #   levels.drawLevels()
+        #else:
         self.drawHomeScreen()
 
     def redrawAllWrapper(self):

@@ -7,62 +7,61 @@
 from tkinter import *
 
 class levelChooser(object):
-    def draw(canvas, data):
+    
+    def drawLevels(self):
+        levels= PhotoImage(file = "levels.gif")
+        label = Label(image=levels)
+        label.image = levels
+        label.pack()
+        self.canvas.create_image(0, 30, anchor = NW, image = label.image)
+
+    def init(self):
+        pass
+                
+    def mousePressed(self, event):
+        #go to game board
         pass
     
-    def init(data):
-        pass
-        
-    def mousePressed(event, data):
+    def timerFired(self):
         pass
     
-    def keyPressed(event, data):
-        pass
-    
-    def timerFired(data):
-        pass
-    
-    def redrawAll(canvas, data):
-        draw(canvas, data)
-            
-    def run(self):
-        def redrawAllWrapper(canvas, data):
-            canvas.delete(ALL)
-            canvas.create_rectangle(0, 0, data.width, data.height,
+    def redrawAll(self):
+        self.drawLevels()
+
+    def redrawAllWrapper(self):
+        self.canvas.delete(ALL)
+        self.canvas.create_rectangle(0, 0, self.width, self.height,
                                     fill='white', width=0)
-            redrawAll(canvas, data)
-            canvas.update()    
+        self.redrawAll()
+        self.canvas.update()    
     
-        def mousePressedWrapper(event, canvas, data):
-            mousePressed(event, data)
-            redrawAllWrapper(canvas, data)
+    def mousePressedWrapper(self, event):
+        self.mousePressed(event)
+        self.redrawAllWrapper()
     
-        def keyPressedWrapper(event, canvas, data):
-            keyPressed(event, data)
-            redrawAllWrapper(canvas, data)
     
-        def timerFiredWrapper(canvas, data):
-            timerFired(data)
-            redrawAllWrapper(canvas, data)
-            # pause, then call timerFired again
-            canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-        # Set up data and call init
-        class Struct(object): pass
-        data = Struct()
-        data.width = 600
-        data.height = 750
-        data.timerDelay = 100 # milliseconds
-        init(data)
+    def timerFiredWrapper(self):
+        self.timerFired()
+        self.redrawAllWrapper()
+        # pause, then call timerFired again
+        self.canvas.after(self.timerDelay, self.timerFiredWrapper)
+        
+    def runLevels(self):
+        self.width = 600
+        self.height = 750
+        self.timerDelay = 100 # milliseconds
+        self.init()
         # create the root and the canvas
         root = Toplevel()
-        canvas = Canvas(root, width=data.width, height=data.height)
-        canvas.pack()
+        self.canvas = Canvas(root, width=self.width, height=self.height)
+        self.canvas.pack()
         # set up events
         root.bind("<Button-1>", lambda event:
-                                mousePressedWrapper(event, canvas, data))
-        root.bind("<Key>", lambda event:
-                                keyPressedWrapper(event, canvas, data))
-        timerFiredWrapper(canvas, data)
+                                self.mousePressedWrapper(event))
+        self.timerFiredWrapper()
         # and launch the app
         root.mainloop()  # blocks until window is closed
         print("bye!")
+        
+levels = levelChooser()
+levels.runLevels()
