@@ -60,7 +60,7 @@ class playGameBoard(object):
         elif (self.level == "MEDIUM"):
             self.numColors = 4
         elif (self.level == "HARD"):
-            self.numColors == 6
+            self.numColors = 6
         self.generateBoard()
         
     def generateBoard(self):
@@ -76,18 +76,7 @@ class playGameBoard(object):
         #depending on game number, make board harder
     
     def checkSection(self, row, col):
-        #return True
-        self.sectionSize = 1
-        newRow, newCol = self.goTopLeft(row, col)[0], self.goTopLeft(row, col)[1]
-        newCol = self.goRight(newRow, newCol)
-        newCol = self.goLeft(newRow, newCol)
-        
-        while(self.goDown(newRow, newCol) != -1):
-            newRow, newCol = self.goDown(newRow, newCol)[0], self.goDown(newRow, newCol)[1]
-            newCol = self.goRight(newRow, newCol)
-            newCol = self.goLeft(newRow, newCol)
-        
-        
+        self.getSectionSize(row, col)
         if (self.level == "EASY"):
             if(self.sectionSize > 20-self.game): #or self.sectionSize<4):
                 return False
@@ -98,6 +87,21 @@ class playGameBoard(object):
             if(self.sectionSize > 10-self.game): #or self.sectionSize<2):
                 return False
         return True
+        
+    def getSectionSize(self, row, col):
+        self.sectionSize = 1
+        newRow, newCol = self.goTopLeft(row, col)[0], self.goTopLeft(row, col)[1]
+        newCol = self.goRight(newRow, newCol)
+        print(self.sectionSize)
+        newCol = self.goLeft(newRow, newCol)
+        
+        while(self.goDown(newRow, newCol) != -1):
+            newRow, newCol = self.goDown(newRow, newCol)[0], self.goDown(newRow, newCol)[1]
+            newCol = self.goRight(newRow, newCol)
+            print(self.sectionSize)
+            newCol = self.goLeft(newRow, newCol)
+        return self.sectionSize
+        
     
     def checkColor(self, row1, col1, row2, col2):
         if(self.isValid(row1, col1) and self.isValid(row2, col2)):
@@ -158,9 +162,20 @@ class playGameBoard(object):
     def playGame(self):
         pass
         
+        
+    def removeSection(self, row, col):
+        if (self.getSectionSize(row, col)>1):
+            print("True!!")
+        else:
+            print("False")
+            
+        
     def mousePressed(self, event):
         #start playing game
-        print("hello!!")
+        col = int((event.x-30)//55)
+        row = int((event.y-145)//55)
+        self.removeSection(row, col)
+        print("SECTION SIZE: ", self.getSectionSize(row, col))
     
     def timerFired(self):
         if (not self.gameOver):
