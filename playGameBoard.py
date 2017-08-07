@@ -55,7 +55,7 @@ class playGameBoard(object):
         self.boardFinished = False
         self.gameOver = False
         self.score = 0
-        print(self.gameBoard)
+        self.generateBoard()
         
     def generateBoard(self):
         self.score = 0
@@ -76,7 +76,9 @@ class playGameBoard(object):
         pass
     
     def timerFired(self):
-        self.generateBoard()
+        if (not self.gameOver):
+            if(self.boardFinished):
+                self.generateBoard()
     
     def redrawAll(self):
         self.drawGameBoard(self.canvas)
