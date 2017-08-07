@@ -37,7 +37,8 @@ class playGameBoard(object):
         label.image = settings
         label.pack()
         canvas.create_image(275, 30, anchor = NW, image = label.image)
-        
+        canvas.create_text(30, 50, anchor = NW, text = "DIFFICULTY: " + self.level, fill = "black", font = "Verdana 20")
+        canvas.create_text(400, 50, anchor = NW, text = "SCORE: " + str(self.score), fill = "black", font = "Verdana 20")
        
         
 
@@ -49,7 +50,7 @@ class playGameBoard(object):
         self.margin = 5
         self.gameBoard = [([0]*self.size) for i in range(self.size)]
         self.colors = ["pink", "yellow", "turquoise", "green", "blue", "lavender", "orange"]
-        self.level = "easy"
+        self.level = "EASY"
         self.game = 0
         self.boardFinished = False
         self.gameOver = False
@@ -60,7 +61,7 @@ class playGameBoard(object):
         self.score = 0
         self.game += 1
         self.boardFinished = False
-        if (self.level == "easy"):
+        if (self.level == "EASY"):
             for r in range(self.size):
                 for c in range(self.size):
                     self.gameBoard[r][c] = self.colors[random.randint(0,2)]
