@@ -14,6 +14,9 @@ class levelChooser(object):
         label.image = levels
         label.pack()
         canvas.create_image(0, 30, anchor = NW, image = label.image)
+        
+        root.bind("<Button-1>", lambda event:
+                                self.mousePressedWrapper(event))
 
     def init(self):
         pass

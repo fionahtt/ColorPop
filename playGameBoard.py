@@ -55,18 +55,33 @@ class playGameBoard(object):
         self.boardFinished = False
         self.gameOver = False
         self.score = 0
+        if (self.level == "EASY"):
+            self.numColors = 2
+        elif (self.level == "MEDIUM"):
+            self.numColors = 4
+        elif (self.level == "HARD"):
+            self.numColors == 6
         self.generateBoard()
         
     def generateBoard(self):
         self.score = 0
         self.game += 1
         self.boardFinished = False
-        if (self.level == "EASY"):
-            for r in range(self.size):
-                for c in range(self.size):
-                    self.gameBoard[r][c] = self.colors[random.randint(0,2)]
+        for r in range(self.size):
+            for c in range(self.size):
+                self.gameBoard[r][c] = self.colors[random.randint(0,self.numColors)]
+                while (not self.checkSection(r,c)):
+                    self.gameBoard[r][c] = self.colors[random.randint(0,self.numColors)]
                 
         #depending on game number, make board harder
+    
+    def checkSection(self, row, col):
+        pass
+        
+    def isValid(self, row, col):
+        if (self.gameBoard[row][col] == 0):
+            return False
+        return True
     
     def playGame(self):
         pass
