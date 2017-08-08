@@ -197,6 +197,7 @@ def playMousePressed(event, data):
 def playTimerFired(data):
     if (not data.gameOver):
         if(data.boardFinished):
+            data.game += 1
             generateBoard(data)
 
     
