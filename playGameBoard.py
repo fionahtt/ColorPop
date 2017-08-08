@@ -132,6 +132,22 @@ def removeSection(data, row, col):
             data.gameBoard[x[0]][x[1]] = 0
         data.score += len(data.visited) * (len(data.visited) - 1)
         
+def fillBoard(data, row, col):
+    newCol = []
+    for col in range(data.size):
+        for row in range(data.size-1, -1, -1):
+            if (data.gameBoard[row][col] != 0):
+                newCol.append(data.gameBoard[row][col])
+                length = len(newCol)
+                newCol += [0] * (10-length)
+        for row in range(data.size-1, -1, -1):
+            data.gameBoard[row][col] = newCol[row]
+            
+def checkGameOver(data):
+    pass
+    
+def checkBoardFinished(data):
+    pass
     
 def playMousePressed(event, data):
     #settings button
@@ -140,6 +156,14 @@ def playMousePressed(event, data):
     col = int((event.x-30)//55)
     row = int((event.y-145)//55)
     removeSection(data,row, col)
+    
+    
+    
+    print(data.gameBoard)
+    
+    
+    
+    fillBoard(data, row, col)
 
 def playTimerFired(data):
     if (not data.gameOver):

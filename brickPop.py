@@ -11,6 +11,8 @@ from levelChooser import *
 from playGameBoard import *
 from settings import *
 
+#framework from 15-112 course notes
+
 ###############
 #MAIN INIT
 #################

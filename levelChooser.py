@@ -34,6 +34,6 @@ def levelsMousePressed(event, data):
         elif (event.y >data.mediumY1 and event.y<data.mediumY2):
             data.mode = "play"
             return "MEDIUM"
-        elif (event.y >data.hardY1 and event.y<data.hardY2): ;;;;;;;;;;;;;;;;;;
+        elif (event.y >data.hardY1 and event.y<data.hardY2):
             data.mode = "play"
             return "HARD"
