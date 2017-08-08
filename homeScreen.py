@@ -6,6 +6,19 @@
 ######################################
 from tkinter import *
 
+def initHomeScreen(data):
+    data.timedX = 50
+    data.timedY = 450
+    data.tutorialX = 325
+    data.tutorialY = 450
+    data.boxWidth = 241
+    data.boxHeight = 246
+    data.levelsPage = None
+    
+def homeMousePressed(event, data):
+    if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
+        data.mode = "levelChooser"
+
 def drawHomeScreen(canvas, data):
     title= PhotoImage(file = "colorpoptitle.gif")
     label = Label(image=title)
@@ -30,70 +43,4 @@ def drawHomeScreen(canvas, data):
     label = Label(image=tutorial)
     label.image = tutorial
     label.pack()
-    canvas.create_image(data.tutorialX,data.tutorialY, anchor = NW, image = label.image)    
-    
-
-def init(data):
-    data.timedX = 50
-    data.timedY = 450
-    data.tutorialX = 325
-    data.tutorialY = 450
-    data.boxWidth = 241
-    data.boxHeight = 246
-        
-def mousePressed(event, data):
-    print("X:" + str(event.x))
-    print("Y: " + str(event.y))
-    
-def keyPressed(event, data):
-    pass
-    
-def timerFired(data):
-    pass
-    
-def redrawAll(canvas, data):
-    drawHomeScreen(canvas, data)
-            
-def run():
-    def redrawAllWrapper(canvas, data):
-        canvas.delete(ALL)
-        canvas.create_rectangle(0, 0, data.width, data.height,
-                                    fill='white', width=0)
-        redrawAll(canvas, data)
-        canvas.update()    
-    
-    def mousePressedWrapper(event, canvas, data):
-        mousePressed(event, data)
-        redrawAllWrapper(canvas, data)
-    
-    def keyPressedWrapper(event, canvas, data):
-        keyPressed(event, data)
-        redrawAllWrapper(canvas, data)
-    
-    def timerFiredWrapper(canvas, data):
-        timerFired(data)
-        redrawAllWrapper(canvas, data)
-        # pause, then call timerFired again
-        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
-    # Set up data and call init
-    class Struct(object): pass
-    data = Struct()
-    data.width = 600
-    data.height = 750
-    data.timerDelay = 100 # milliseconds
-    init(data)
-    # create the root and the canvas
-    root = Toplevel()
-    canvas = Canvas(root, width=data.width, height=data.height)
-    canvas.pack()
-    # set up events
-    root.bind("<Button-1>", lambda event:
-                            mousePressedWrapper(event, canvas, data))
-    root.bind("<Key>", lambda event:
-                                keyPressedWrapper(event, canvas, data))
-    timerFiredWrapper(canvas, data)
-    # and launch the app
-    root.mainloop()  # blocks until window is closed
-    print("bye!")
-    
-run()
+    canvas.create_image(data.tutorialX,data.tutorialY, anchor = NW, image =         label.image)

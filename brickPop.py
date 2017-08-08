@@ -6,105 +6,78 @@
 ######################################
 from tkinter import *
 
+import homeScreen
 import levelChooser
+#import playGameBoard
 
-class brickPop(object):
-    
-    def drawHomeScreen(self):
-        title= PhotoImage(file = "colorpoptitle.gif")
-        label = Label(image=title)
-        label.image = title
-        label.pack()
-        self.canvas.create_image(0,0, anchor = NW, image = label.image)
-        self.canvas.create_line(20, 120, 580, 120, fill = "black")
-        
-        play= PhotoImage(file = "play.gif")
-        label = Label(image=play)
-        label.image = play
-        label.pack()
-        self.canvas.create_image(175,175, anchor = NW, image = label.image)
-        
-        timed= PhotoImage(file = "timed.gif")
-        label = Label(image=timed)
-        label.image = timed
-        label.pack()
-        self.canvas.create_image(self.timedX,self.timedY, anchor = NW, image = label.image)
-    
-        tutorial= PhotoImage(file = "tutorial.gif")
-        label = Label(image=tutorial)
-        label.image = tutorial
-        label.pack()
-        self.canvas.create_image(self.tutorialX,self.tutorialY, anchor = NW, image =         label.image)
-        
-    def initHomeScreen(self):
-        self.timedX = 50
-        self.timedY = 450
-        self.tutorialX = 325
-        self.tutorialY = 450
-        self.boxWidth = 241
-        self.boxHeight = 246
-        self.levelsPage = None
+###############
+#MAIN INIT
+#################
+def init(data):
+    data.mode = "homeScreen"
+    homeScreen.initHomeScreen(data)
 
-    def __init__(self):
-        self.initHomeScreen()
-        
-    def mousePressed(self, event):
-        if (self.levelsPage == None):
-            if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
-                self.levelsPage = levelChooser.levelChooser()
-        else:
-            self.levelsPage.mousePressed(event)
-    
-    def keyPressed(self, event):
-        pass
-    
-    def timerFired(self):
-        pass
-    
-    def redrawAll(self):
-        if (self.levelsPage != None):
-            self.levelsPage.drawLevels(self.canvas)
-        else:
-            self.drawHomeScreen()
+##################    
+#MAIN CONTROLLERS    
+#############
+def mousePressed(event, data):
+    if(data.mode == "homeScreen"):
+        homeScreen.homeMousePressed(event,data)
 
-    def redrawAllWrapper(self):
-        self.canvas.delete(ALL)
-        self.canvas.create_rectangle(0, 0, self.width, self.height,
-                                    fill='white', width=0)
-        self.redrawAll()
-        self.canvas.update()    
-    
-    def mousePressedWrapper(self, event):
-        self.mousePressed(event)
-        self.redrawAllWrapper()
-    
-    def keyPressedWrapper(self, event):
-        self.keyPressed(event)
-        self.redrawAllWrapper()
-    
-    def timerFiredWrapper(self):
-        self.timerFired()
-        self.redrawAllWrapper()
+def keyPressed(event, data):
+    pass
+
+def timerFired(data):
+    pass
+
+def redrawAll(canvas, data):
+    if (data.mode == "homeScreen"):
+        homeScreen.drawHomeScreen(canvas, data)
+    elif (data.mode == "levelChooser"):
+        levelChooser.drawLevels(canvas, data)
+
+#############################
+#MAIN RUN        
+######################
+
+def run():
+    def redrawAllWrapper(canvas, data):
+        canvas.delete(ALL)
+        redrawAll(canvas, data)
+        canvas.update()    
+
+    def mousePressedWrapper(event, canvas, data):
+        mousePressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def keyPressedWrapper(event, canvas, data):
+        keyPressed(event, data)
+        redrawAllWrapper(canvas, data)
+
+    def timerFiredWrapper(canvas, data):
+        timerFired(data)
+        redrawAllWrapper(canvas, data)
         # pause, then call timerFired again
-        self.canvas.after(self.timerDelay, self.timerFiredWrapper)
-        
-    def run(self):
-        self.width = 600
-        self.height = 750
-        self.timerDelay = 100 # milliseconds
-        #self.init()
-        # create the root and the canvas
-        root = Toplevel()
-        self.canvas = Canvas(root, width=self.width, height=self.height)
-        self.canvas.pack()
-        # set up events
-        root.bind("<Button-1>", lambda event:
-                                self.mousePressedWrapper(event))
-        root.bind("<Key>", lambda event:
-                                self.keyPressedWrapper(event))
-        self.timerFiredWrapper()
-        # and launch the app
-        root.mainloop()  # blocks until window is closed
-        print("bye!")
-        
-brickPop().run()
+        canvas.after(data.timerDelay, timerFiredWrapper, canvas, data)
+    # Set up data and call init
+    class Struct(object): pass
+    data = Struct()
+    data.width = 600
+    data.height = 750
+    data.timerDelay = 100 # milliseconds
+    init(data)
+    # create the root and the canvas
+    root = Toplevel()
+    canvas = Canvas(root, width=data.width, height=data.height)
+    canvas.pack()
+    # set up events
+    root.bind("<Button-1>", lambda event:
+                            mousePressedWrapper(event, canvas, data))
+    root.bind("<Key>", lambda event:
+                            keyPressedWrapper(event, canvas, data))
+    timerFiredWrapper(canvas, data)
+    # and launch the app
+    root.mainloop()  # blocks until window is closed
+    print("bye!")
+    
+run()
