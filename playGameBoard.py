@@ -23,7 +23,7 @@ def initGameBoard(data):
     data.score = 0
     data.sectionSize = 1
     data.visited = set()
-    generateBoard(data)
+    #generateBoard(data)
     
 def drawGameBoard(canvas, data):
     if (data.gameOver):

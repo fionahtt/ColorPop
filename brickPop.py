@@ -31,6 +31,7 @@ def mousePressed(event, data):
         homeMousePressed(event,data)
     elif (data.mode == "levelChooser"):
         data.level = levelsMousePressed(event,data)
+        generateBoard(data)
     elif(data.mode == "play"):
         playMousePressed(event, data)
     elif(data.mode == "settings"):
