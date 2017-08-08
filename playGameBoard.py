@@ -133,15 +133,18 @@ def removeSection(data, row, col):
         data.score += len(data.visited) * (len(data.visited) - 1)
         
 def fillBoard(data, row, col):
-    newCol = []
     for col in range(data.size):
+        newCol = []
         for row in range(data.size-1, -1, -1):
             if (data.gameBoard[row][col] != 0):
                 newCol.append(data.gameBoard[row][col])
-                length = len(newCol)
-                newCol += [0] * (10-length)
-        for row in range(data.size-1, -1, -1):
-            data.gameBoard[row][col] = newCol[row]
+        length = len(newCol)
+        print(newCol)
+        newCol += [0] * (10-length)
+        print(newCol)
+        
+        for row in range(data.size):
+            data.gameBoard[row][col] = newCol[data.size - row-1]
             
 def checkGameOver(data):
     pass
