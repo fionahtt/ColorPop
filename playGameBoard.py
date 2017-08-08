@@ -26,28 +26,31 @@ def initGameBoard(data):
     generateBoard(data)
     
 def drawGameBoard(canvas, data):
-    drawLabels(canvas, data)
-    for r in range(data.size):
-        for c in range(data.size):
-            color = data.gameBoard[r][c]
-            if (color == "pink"):
-                color = "#F18D9E"
-            elif(color == "yellow"):
-                color = "#F5E356"
-            elif(color == "turquoise"):
-                color = "#5BC8AC"
-            elif(color == "green"):
-                color = "#9BC01C"
-            elif (color == "blue"):
-                color = "#4897D8"
-            elif (color == "lavender"):
-                color = "#9A9EAB"
-            elif (color == "orange"):
-                color = "#F9A603"
-            else:
-                color = "white"
-                
-            canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
+    if (data.gameOver):
+        canvas.create_text (100, 100, text = "game over")
+    else:
+        drawLabels(canvas, data)
+        for r in range(data.size):
+            for c in range(data.size):
+                color = data.gameBoard[r][c]
+                if (color == "pink"):
+                    color = "#F18D9E"
+                elif(color == "yellow"):
+                    color = "#F5E356"
+                elif(color == "turquoise"):
+                    color = "#5BC8AC"
+                elif(color == "green"):
+                    color = "#9BC01C"
+                elif (color == "blue"):
+                    color = "#4897D8"
+                elif (color == "lavender"):
+                    color = "#9A9EAB"
+                elif (color == "orange"):
+                    color = "#F9A603"
+                else:
+                    color = "white"
+                    
+                canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
             
 def drawLabels(canvas, data):
     settings= PhotoImage(file = "settings.gif")
@@ -150,23 +153,34 @@ def fillBoard(data, row, col):
     for col in range(data.size):
         for row in range(data.size):
             if (data.gameBoard[row][col] != 0):
-                print("hello!!")
                 for row1 in range(data.size):
                     newBoard[row1][counter] = data.gameBoard[row1][col]
                 counter += 1
                 break
-    print(newBoard)
-                
     for row in range(data.size):
         for col in range(data.size):
             data.gameBoard[row][col] = newBoard[row][col]
-        
             
 def checkGameOver(data):
-    pass
+    max = 1
+    gameOver = True
+    for row in range(data.size):
+        for col in range(data.size):
+            data.visited = set()
+            getSectionSize(data, row, col)
+            if (len(data.visited) > max):
+                gameOver = False
+    if (data.boardFinished):
+        gameOver = False
+    data.gameOver = gameOver
     
 def checkBoardFinished(data):
-    pass
+    boardFinished = True
+    for row in range(data.size):
+        for col in range(data.size):
+            if(data.gameBoard[row][col] != 0):
+                boardFinished = False
+    data.boardFinished = boardFinished
     
 def playMousePressed(event, data):
     #settings button
@@ -175,13 +189,14 @@ def playMousePressed(event, data):
     col = int((event.x-30)//55)
     row = int((event.y-145)//55)
     removeSection(data,row, col)
-    
-    
     fillBoard(data, row, col)
+    checkBoardFinished(data)
+    checkGameOver(data)
+    
 
 def playTimerFired(data):
     if (not data.gameOver):
         if(data.boardFinished):
-            data.generateBoard()
+            generateBoard(data)
 
     
