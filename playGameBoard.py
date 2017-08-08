@@ -49,6 +49,8 @@ def drawGameBoard(canvas, data):
                 color = "#9A9EAB"
             elif (color == "orange"):
                 color = "#F9A603"
+            else:
+                color = "white"
                 
             canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
             
@@ -124,10 +126,8 @@ def removeSection(data, row, col):
     getSectionSize(data, row, col)
     if (len(data.visited)>1):
         for x in data.visited:
-            data.gameBoard[x[0]][x[1]] = "white"
+            data.gameBoard[x[0]][x[1]] = 0
         data.score += len(data.visited) * (len(data.visited) - 1)
-    else:
-        print("that wasn't a valid move!")
         
     
 def playMousePressed(event, data):

@@ -16,6 +16,7 @@ import playGameBoard
 def init(data):
     data.mode = "homeScreen"
     homeScreen.initHomeScreen(data)
+    levelChooser.initLevels(data)
     playGameBoard.initGameBoard(data)
 
 ##################    
@@ -25,7 +26,7 @@ def mousePressed(event, data):
     if(data.mode == "homeScreen"):
         homeScreen.homeMousePressed(event,data)
     elif (data.mode == "levelChooser"):
-        levelChooser.levelsMousePressed(event,data)
+        data.level = levelChooser.levelsMousePressed(event,data)
     elif(data.mode == "play"):
         playGameBoard.playMousePressed(event, data)
 
@@ -40,6 +41,8 @@ def redrawAll(canvas, data):
     if (data.mode == "homeScreen"):
         homeScreen.drawHomeScreen(canvas, data)
     elif (data.mode == "levelChooser"):
+        
+        
         levelChooser.drawLevels(canvas, data)
     elif (data.mode == "play"):
         playGameBoard.drawGameBoard(canvas, data)
