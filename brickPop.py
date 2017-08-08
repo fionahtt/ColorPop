@@ -6,46 +6,49 @@
 ######################################
 from tkinter import *
 
-import homeScreen
-import levelChooser
-import playGameBoard
+from homeScreen import *
+from levelChooser import *
+from playGameBoard import *
+from settings import *
 
 ###############
 #MAIN INIT
 #################
 def init(data):
     data.mode = "homeScreen"
-    homeScreen.initHomeScreen(data)
-    levelChooser.initLevels(data)
-    playGameBoard.initGameBoard(data)
+    initHomeScreen(data)
+    initLevels(data)
+    initGameBoard(data)
 
 ##################    
 #MAIN CONTROLLERS    
 #############
 def mousePressed(event, data):
     if(data.mode == "homeScreen"):
-        homeScreen.homeMousePressed(event,data)
+        homeMousePressed(event,data)
     elif (data.mode == "levelChooser"):
-        data.level = levelChooser.levelsMousePressed(event,data)
+        data.level = levelsMousePressed(event,data)
     elif(data.mode == "play"):
-        playGameBoard.playMousePressed(event, data)
+        playMousePressed(event, data)
+    elif(data.mode == "settings"):
+        settingsMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
 
 def timerFired(data):
     if (data.mode == "play"):
-        playGameBoard.playTimerFired(data)
+        playTimerFired(data)
 
 def redrawAll(canvas, data):
     if (data.mode == "homeScreen"):
-        homeScreen.drawHomeScreen(canvas, data)
+        drawHomeScreen(canvas, data)
     elif (data.mode == "levelChooser"):
-        
-        
-        levelChooser.drawLevels(canvas, data)
+        drawLevels(canvas, data)
     elif (data.mode == "play"):
-        playGameBoard.drawGameBoard(canvas, data)
+        drawGameBoard(canvas, data)
+    elif (data.mode == "settings"):
+        drawSettings(canvas, data)
 
 #############################
 #MAIN RUN        

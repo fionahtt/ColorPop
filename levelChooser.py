@@ -29,14 +29,11 @@ def drawLevels(canvas, data):
 def levelsMousePressed(event, data):
     if(event.x>data.X1 and event.x < data.X2):
         if (event.y >data.easyY1 and event.y<data.easyY2):
-            print("HELLLOOOOOO")
             data.mode = "play"
             return "EASY"
         elif (event.y >data.mediumY1 and event.y<data.mediumY2):
-            print("HIIIIIII")
             data.mode = "play"
             return "MEDIUM"
-        elif (event.y >data.hardY1 and event.y<data.hardY2):
-            print("HEYYYYYYY")
+        elif (event.y >data.hardY1 and event.y<data.hardY2): ;;;;;;;;;;;;;;;;;;
             data.mode = "play"
             return "HARD"

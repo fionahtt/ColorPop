@@ -16,18 +16,13 @@ def initGameBoard(data):
     data.gameBoard = [([0]*data.size) for i in range(data.size)]
     data.colors = ["pink", "yellow", "turquoise", "green", "blue", "lavender", "orange"]
     data.level = "EASY"
+    data.numColors = 2
     data.game = 0
     data.boardFinished = False
     data.gameOver = False
     data.score = 0
     data.sectionSize = 1
     data.visited = set()
-    if (data.level == "EASY"):
-        data.numColors = 2
-    elif (data.level == "MEDIUM"):
-        data.numColors = 4
-    elif (data.level == "HARD"):
-        data.numColors = 6
     generateBoard(data)
     
 def drawGameBoard(canvas, data):
@@ -63,7 +58,16 @@ def drawLabels(canvas, data):
     canvas.create_text(30, 50, anchor = NW, text = "DIFFICULTY: " + data.level, fill = "black", font = "Verdana 20")
     canvas.create_text(400, 50, anchor = NW, text = "SCORE: " + str(data.score), fill = "black", font = "Verdana 20")
     
+def getNumColors(data):
+    if (data.level == "EASY"):
+        data.numColors = 2
+    elif (data.level == "MEDIUM"):
+        data.numColors = 4
+    elif (data.level == "HARD"):
+        data.numColors = 6
+    
 def generateBoard(data):
+    getNumColors(data)
     data.score = 0
     data.game += 1
     data.boardFinished = False
@@ -120,7 +124,6 @@ def getSectionSize(data, row, col):
             getSectionSize(data, row-1, col)
     return
     
-    
 def removeSection(data, row, col):
     data.visited = set()
     getSectionSize(data, row, col)
@@ -131,7 +134,9 @@ def removeSection(data, row, col):
         
     
 def playMousePressed(event, data):
-    #start playing game
+    #settings button
+    if (event.x>276 and event.x<319 and event.y>31 and event.y<72):
+        data.mode = "settings"
     col = int((event.x-30)//55)
     row = int((event.y-145)//55)
     removeSection(data,row, col)
