@@ -21,7 +21,7 @@ def initGameBoard(data):
     data.boardFinished = False
     data.gameOver = False
     data.score = 0
-    data.highScore = 0
+    #data.highScore = 0
     data.sectionSize = 1
     data.visited = set()
     #generateBoard(data)

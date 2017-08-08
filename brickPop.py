@@ -19,6 +19,7 @@ from playGameOver import *
 #################
 def init(data):
     data.mode = "homeScreen"
+    data.highScore = 0
     initHomeScreen(data)
     initLevels(data)
     initGameBoard(data)
