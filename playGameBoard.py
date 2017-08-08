@@ -21,13 +21,14 @@ def initGameBoard(data):
     data.boardFinished = False
     data.gameOver = False
     data.score = 0
+    data.highScore = 0
     data.sectionSize = 1
     data.visited = set()
     #generateBoard(data)
     
 def drawGameBoard(canvas, data):
     if (data.gameOver):
-        canvas.create_text (100, 100, text = "game over")
+        data.mode = "playGameOver"
     else:
         drawLabels(canvas, data)
         for r in range(data.size):
@@ -192,12 +193,14 @@ def playMousePressed(event, data):
     fillBoard(data, row, col)
     checkBoardFinished(data)
     checkGameOver(data)
-    
 
 def playTimerFired(data):
     if (not data.gameOver):
         if(data.boardFinished):
             data.game += 1
             generateBoard(data)
+    else:
+        if (data.score>data.highScore):
+            data.highScore = data.score
 
     

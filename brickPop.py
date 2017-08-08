@@ -10,6 +10,7 @@ from homeScreen import *
 from levelChooser import *
 from playGameBoard import *
 from settings import *
+from playGameOver import *
 
 #framework from 15-112 course notes
 
@@ -22,6 +23,7 @@ def init(data):
     initLevels(data)
     initGameBoard(data)
     initSettings(data)
+    initplayGameOver(data)
 
 ##################    
 #MAIN CONTROLLERS    
@@ -36,6 +38,8 @@ def mousePressed(event, data):
         playMousePressed(event, data)
     elif(data.mode == "settings"):
         settingsMousePressed(event, data)
+    elif (data.mode == "playGameOver"):
+        playGameOverMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
@@ -53,6 +57,8 @@ def redrawAll(canvas, data):
         drawGameBoard(canvas, data)
     elif (data.mode == "settings"):
         drawSettings(canvas, data)
+    elif(data.mode == "playGameOver"):
+        drawPlayGameOver(canvas, data)
 
 #############################
 #MAIN RUN        
