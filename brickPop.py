@@ -8,7 +8,7 @@ from tkinter import *
 
 import homeScreen
 import levelChooser
-#import playGameBoard
+import playGameBoard
 
 ###############
 #MAIN INIT
@@ -16,6 +16,7 @@ import levelChooser
 def init(data):
     data.mode = "homeScreen"
     homeScreen.initHomeScreen(data)
+    playGameBoard.initGameBoard(data)
 
 ##################    
 #MAIN CONTROLLERS    
@@ -23,18 +24,25 @@ def init(data):
 def mousePressed(event, data):
     if(data.mode == "homeScreen"):
         homeScreen.homeMousePressed(event,data)
+    elif (data.mode == "levelChooser"):
+        levelChooser.levelsMousePressed(event,data)
+    elif(data.mode == "play"):
+        playGameBoard.playMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
 
 def timerFired(data):
-    pass
+    if (data.mode == "play"):
+        playGameBoard.playTimerFired(data)
 
 def redrawAll(canvas, data):
     if (data.mode == "homeScreen"):
         homeScreen.drawHomeScreen(canvas, data)
     elif (data.mode == "levelChooser"):
         levelChooser.drawLevels(canvas, data)
+    elif (data.mode == "play"):
+        playGameBoard.drawGameBoard(canvas, data)
 
 #############################
 #MAIN RUN        
