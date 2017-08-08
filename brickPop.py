@@ -21,6 +21,7 @@ def init(data):
     initHomeScreen(data)
     initLevels(data)
     initGameBoard(data)
+    initSettings(data)
 
 ##################    
 #MAIN CONTROLLERS    
