@@ -13,6 +13,7 @@ from settings import *
 from playGameOver import *
 from timedGameBoard import *
 from timedSettings import *
+from timedGameOver import *
 
 #framework from 15-112 course notes
 
@@ -22,6 +23,7 @@ from timedSettings import *
 def init(data):
     data.mode = "homeScreen"
     data.highScore = 0
+    data.mostBoards = 0
     initHomeScreen(data)
     initLevels(data)
     initGameBoard(data)

@@ -14,7 +14,7 @@ def initTimedBoard(data):
     data.time = 300
     data.boards = 0
     data.level = "EASY"
-    data.mostBoards = 0
+    #data.mostBoards = 0
     
 def drawTimedBoard(canvas, data):
     if (data.gameOver):
@@ -49,13 +49,21 @@ def drawTimedLabels(canvas, data):
     label.image = settings
     label.pack()
     canvas.create_image(275, 30, anchor = NW, image = label.image)
-    time = str(int(data.time)//60) + ":" + str(int(data.time)%60)
+    if (int(data.time)%60 <10):
+        seconds = str(0) + str(int(data.time)%60)
+    else:
+        seconds = str(int(data.time)%60)
+    time = str(int(data.time)//60) + ":" + seconds
     canvas.create_text(30, 50, anchor = NW, text = "TIME: " + time, fill = "black", font = "Verdana 20")
     canvas.create_text(400, 50, anchor = NW, text = "BOARDS: " + str(data.boards), fill = "black", font = "Verdana 20")
     
+#taken from 15-112 hw 1.1
+def almostEqual(d1, d2):
+    epsilon = 10**-8
+    return (abs(d2 - d1) < epsilon)
             
 def checkTimedGameOver(data):
-    if (data.time == 0):
+    if (almostEqual(data.time, 0)):
         data.gameOver = True
     
 def checkTimedBoardFinished(data):
@@ -78,20 +86,15 @@ def checkNoMoreMoves(data):
 
 def timedMousePressed(event, data):
     if (event.x>276 and event.x<319 and event.y>31 and event.y<72):
-        
-        
-        
-        ########PAUSE TIMER
-        
         data.mode = "timedSettings"
     col = int((event.x-30)//55)
     row = int((event.y-145)//55)
     removeSection(data,row, col)
     fillBoard(data, row, col)
     checkTimedBoardFinished(data)
-    checkTimedGameOver(data)
 
 def timedTimerFired(data):
+    checkTimedGameOver(data)
     if (not data.gameOver):
         data.time -= 0.1
         if(data.boardFinished):
@@ -106,5 +109,5 @@ def timedTimerFired(data):
     else:
         #check for most boards
         data.mode = "timedGameOver"
-
-    
+        if (data.boards>data.mostBoards):
+            data.mostBoards = data.boards

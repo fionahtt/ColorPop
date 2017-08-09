@@ -17,7 +17,7 @@ def drawTimedGameOver(canvas, data):
     label.pack()
     canvas.create_image(0,0, anchor = NW, image = label.image)
     canvas.create_text(302,323, text = str(data.boards), fill = "black", font = "Verdana 100")
-    canvas.create_text(327,415, anchor = NW, text = str(data.mostBoards), fill = "black", font = "Verdana 20")
+    canvas.create_text(330,416, anchor = NW, text = str(data.mostBoards), fill = "black", font = "Verdana 20")
             
 def timedGameOverMousePressed(event, data):
     if(event.x>data.gameOverX1 and event.x < data.gameOverX2):
