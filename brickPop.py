@@ -11,6 +11,8 @@ from levelChooser import *
 from playGameBoard import *
 from settings import *
 from playGameOver import *
+from timedGameBoard import *
+from timedSettings import *
 
 #framework from 15-112 course notes
 
@@ -25,6 +27,7 @@ def init(data):
     initGameBoard(data)
     initSettings(data)
     initplayGameOver(data)
+    initTimedBoard(data)
 
 ##################    
 #MAIN CONTROLLERS    
@@ -34,6 +37,8 @@ def mousePressed(event, data):
         homeMousePressed(event,data)
     elif (data.mode == "levelChooser"):
         data.level = levelsMousePressed(event,data)
+        data.score = 0
+        data.game = 0
         generateBoard(data)
     elif(data.mode == "play"):
         playMousePressed(event, data)
@@ -41,6 +46,11 @@ def mousePressed(event, data):
         settingsMousePressed(event, data)
     elif (data.mode == "playGameOver"):
         playGameOverMousePressed(event, data)
+    elif (data.mode == "timed"):
+        timedMousePressed(event, data)
+        #generateBoard(data)
+    elif(data.mode == "timedSettings"):
+        timedSettingsMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
@@ -48,6 +58,8 @@ def keyPressed(event, data):
 def timerFired(data):
     if (data.mode == "play"):
         playTimerFired(data)
+    elif (data.mode == "timed"):
+        timedTimerFired(data)
 
 def redrawAll(canvas, data):
     if (data.mode == "homeScreen"):
@@ -56,10 +68,12 @@ def redrawAll(canvas, data):
         drawLevels(canvas, data)
     elif (data.mode == "play"):
         drawGameBoard(canvas, data)
-    elif (data.mode == "settings"):
+    elif (data.mode == "settings" or data.mode == "timedSettings"):
         drawSettings(canvas, data)
     elif(data.mode == "playGameOver"):
         drawPlayGameOver(canvas, data)
+    elif (data.mode == "timed"):
+        drawTimedBoard(canvas, data)
 
 #############################
 #MAIN RUN        

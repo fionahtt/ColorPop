@@ -15,6 +15,7 @@ def initGameBoard(data):
     data.margin = 5
     data.gameBoard = [([0]*data.size) for i in range(data.size)]
     data.colors = ["pink", "yellow", "turquoise", "green", "blue", "lavender", "orange"]
+    
     data.level = "EASY"
     data.numColors = 2
     data.game = 0
@@ -72,7 +73,7 @@ def getNumColors(data):
     
 def generateBoard(data):
     getNumColors(data)
-    data.score = 0
+    #data.score = 0
     data.game += 1
     data.boardFinished = False
     for r in range(data.size):
@@ -110,6 +111,8 @@ def isValid(data, row, col):
     elif (data.gameBoard[row][col] == 0):
         return False
     return True   
+
+#inspired by floodfill
     
 def getSectionSize(data, row, col):
     data.visited.add((row, col))
@@ -200,6 +203,7 @@ def playTimerFired(data):
             data.game += 1
             generateBoard(data)
     else:
+        data.score = 0
         if (data.score>data.highScore):
             data.highScore = data.score
 

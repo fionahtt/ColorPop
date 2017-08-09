@@ -6,18 +6,29 @@
 ######################################
 from tkinter import *
 
+from playGameBoard import *
+from timedGameBoard import *
+
 def initHomeScreen(data):
     data.timedX = 50
     data.timedY = 450
     data.tutorialX = 325
     data.tutorialY = 450
-    data.boxWidth = 241
-    data.boxHeight = 246
-    data.levelsPage = None
+    
+    data.timedX1 = 92
+    data.timedY1 = 472
+    data.timedX2 = 248
+    data.timedY2 = 629
     
 def homeMousePressed(event, data):
     if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
         data.mode = "levelChooser"
+    elif (event.x>=data.timedX1 and event.x <= data.timedX2 and event.y >=data.timedY1 and event.y <=data.timedY2):
+        data.mode = "timed"
+        data.level = "EASY"
+        data.boards = 0
+        generateBoard(data)
+        
 
 def drawHomeScreen(canvas, data):
     title= PhotoImage(file = "colorpoptitle.gif")

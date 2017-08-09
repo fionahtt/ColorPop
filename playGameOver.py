@@ -31,6 +31,8 @@ def playGameOverMousePressed(event, data):
     if(event.x>data.gameOverX1 and event.x < data.gameOverX2):
         if (event.y >data.againY1 and event.y<data.againY2):
             data.mode = "play"
+            data.score = 0
+            data.game = 0
             data.gameOver = False
             generateBoard(data)
         elif (event.y >data.overExitY1 and event.y<data.overExitY2):

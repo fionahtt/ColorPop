@@ -7,6 +7,7 @@
 from tkinter import *
 
 from playGameBoard import *
+from timedGameBoard import *
 
 def initSettings(data):
     data.leftX = 88
@@ -34,6 +35,9 @@ def settingsMousePressed(event, data):
             data.mode = "play"
         elif (event.y >data.restartY1 and event.y<data.restartY2):
             data.mode = "play"
+            data.score = 0
+            data.game = 0
             generateBoard(data)
         elif (event.y >data.exitY1 and event.y<data.exitY2):
             data.mode = "homeScreen"
+            data.score = 0
