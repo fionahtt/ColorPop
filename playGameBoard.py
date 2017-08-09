@@ -134,8 +134,12 @@ def removeSection(data, row, col):
     if (len(data.visited)>1):
         for x in data.visited:
             data.gameBoard[x[0]][x[1]] = 0
-        data.score += len(data.visited) * (len(data.visited) - 1)
-        
+        if (data.level == "EASY"):
+            data.score += len(data.visited) * (len(data.visited) - 1)
+        elif (data.level == "MEDIUM"):
+            data.score += len(data.visited) * len(data.visited)
+        elif (data.level == "HARD"):
+            data.score += len(data.visited) * (len(data.visited) + 1)
 def fillBoard(data, row, col):
     #fill down
     for col in range(data.size):
