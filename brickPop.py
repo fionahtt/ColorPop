@@ -6,6 +6,7 @@
 ######################################
 from tkinter import *
 
+#import all the files
 from homeScreen import *
 from levelChooser import *
 from playGameBoard import *
@@ -19,7 +20,7 @@ from tutorial import *
 #framework from 15-112 course notes
 
 ###############
-#MAIN INIT
+#MAIN INIT: initialize all the screens
 #################
 def init(data):
     data.mode = "homeScreen"
@@ -34,12 +35,13 @@ def init(data):
     initTutorial(data)
 
 ##################    
-#MAIN CONTROLLERS    
+#mousepressed, timer, and draw for all the screens
 #############
 def mousePressed(event, data):
     if(data.mode == "homeScreen"):
         homeMousePressed(event,data)
     elif (data.mode == "levelChooser"):
+        #reset play game variables
         data.level = levelsMousePressed(event,data)
         data.score = 0
         data.game = 0
@@ -87,7 +89,7 @@ def redrawAll(canvas, data):
         drawTutorial(canvas, data)
 
 #############################
-#MAIN RUN        
+#RUN        
 ######################
 
 def run():

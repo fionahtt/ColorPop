@@ -27,6 +27,7 @@ def drawLevels(canvas, data):
     canvas.create_image(0, 30, anchor = NW, image = label.image)
             
 def levelsMousePressed(event, data):
+    #change to play screen and choose level
     if(event.x>data.X1 and event.x < data.X2):
         if (event.y >data.easyY1 and event.y<data.easyY2):
             data.mode = "play"

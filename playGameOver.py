@@ -29,12 +29,14 @@ def drawPlayGameOver(canvas, data):
             
 def playGameOverMousePressed(event, data):
     if(event.x>data.gameOverX1 and event.x < data.gameOverX2):
+        #reset play game variables and go back to board
         if (event.y >data.againY1 and event.y<data.againY2):
             data.mode = "play"
             data.score = 0
             data.game = 0
             data.gameOver = False
             generateBoard(data)
+        #go back to home screen and reset gameOver
         elif (event.y >data.overExitY1 and event.y<data.overExitY2):
             data.mode = "homeScreen"
             data.gameOver = False

@@ -49,6 +49,7 @@ def drawTimedLabels(canvas, data):
     label.image = settings
     label.pack()
     canvas.create_image(275, 30, anchor = NW, image = label.image)
+    #make time in minutes and seconds
     if (int(data.time)%60 <10):
         seconds = str(0) + str(int(data.time)%60)
     else:
@@ -63,10 +64,12 @@ def almostEqual(d1, d2):
     return (abs(d2 - d1) < epsilon)
             
 def checkTimedGameOver(data):
+    #game over if time runs out
     if (almostEqual(data.time, 0)):
         data.gameOver = True
     
 def checkTimedBoardFinished(data):
+    #board finished if no blocks left
     boardFinished = True
     for row in range(data.size):
         for col in range(data.size):
@@ -75,6 +78,7 @@ def checkTimedBoardFinished(data):
     data.boardFinished = boardFinished
 
 def checkNoMoreMoves(data):
+    #no more moves if no sections with more than one block
     max = 1
     for row in range(data.size):
         for col in range(data.size):
@@ -96,7 +100,10 @@ def timedMousePressed(event, data):
 def timedTimerFired(data):
     checkTimedGameOver(data)
     if (not data.gameOver):
+        #decrease time
         data.time -= 0.1
+        #increment boards finished, after 5 boards finished, go up to medium
+        #level, after 10 boards finished, go up to hard level
         if(data.boardFinished):
             data.boards += 1
             if(data.boards >4 and data.boards <10):

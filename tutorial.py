@@ -10,6 +10,7 @@ def initTutorial(data):
     data.tutorialMode = 1
 
 def drawTutorial(canvas, data):
+    #draw screen based on mode
     if(data.tutorialMode == 1):
         tutorial1= PhotoImage(file = "tutorial1.gif")
         label = Label(image=tutorial1)
@@ -48,6 +49,7 @@ def drawTutorial(canvas, data):
         canvas.create_image(0, 0, anchor = NW, image = label.image)
             
 def tutorialMousePressed(event, data):
+    #change screen based on current screen and click location
     if(data.tutorialMode == 1):
         if ((event.x>66 and event.x<234 and event.y>224 and event.y<390) or (event.x>246 and event.x<414 and event.y>225 and event.y<333) or (event.x>425 and event.x<534 and event.y>225 and event.y<273)):
             data.tutorialMode = 2

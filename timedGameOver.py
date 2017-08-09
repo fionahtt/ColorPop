@@ -21,6 +21,7 @@ def drawTimedGameOver(canvas, data):
             
 def timedGameOverMousePressed(event, data):
     if(event.x>data.gameOverX1 and event.x < data.gameOverX2):
+        #reset timed game variables and go back to board
         if (event.y >data.againY1 and event.y<data.againY2):
             data.mode = "timed"
             data.boards = 0
@@ -28,6 +29,7 @@ def timedGameOverMousePressed(event, data):
             data.time = 300
             data.gameOver = False
             generateBoard(data)
+        #go back to home screen and set gameOver
         elif (event.y >data.overExitY1 and event.y<data.overExitY2):
             data.mode = "homeScreen"
             data.gameOver = False

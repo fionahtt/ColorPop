@@ -48,7 +48,6 @@ def drawGameBoard(canvas, data):
                 color = "#F9A603"
             else:
                 color = "white"
-                
             canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
         
 def drawLabels(canvas, data):
@@ -61,6 +60,7 @@ def drawLabels(canvas, data):
     canvas.create_text(400, 50, anchor = NW, text = "SCORE: " + str(data.score), fill = "black", font = "Verdana 20")
     
 def getNumColors(data):
+    #different number of colors for each level
     if (data.level == "EASY"):
         data.numColors = 2
     elif (data.level == "MEDIUM"):
@@ -69,6 +69,8 @@ def getNumColors(data):
         data.numColors = 6
     
 def generateBoard(data):
+    #randomly generate board, but if section too big for level,
+    #then randomly select another color
     getNumColors(data)
     #data.score = 0
     data.game += 1
@@ -82,6 +84,10 @@ def generateBoard(data):
     #depending on game number, make board harder
 
 def checkSection(data, row, col):
+    #check section size based on level and game within that level
+    #EASY: biggest section is 20-game number
+    #MEDIUM: biggest section is 15-game number
+    #HARD: biggest section is 10-game number
     data.visited = set()
     getSectionSize(data,row, col)
     data.sectionSize = len(data.visited)
@@ -97,12 +103,14 @@ def checkSection(data, row, col):
     return True
     
 def checkColor(data, row1, col1, row2, col2):
+    #check if blocks are same color
     if(isValid(data, row1, col1) and isValid(data,row2, col2)):
         if(data.gameBoard[row1][col1] == data.gameBoard[row2][col2]):
             return True
     return False
     
 def isValid(data, row, col):
+    #check if the block is not off the board and has assigned color
     if (row<0 or row>9 or col<0 or col>9):
         return False
     elif (data.gameBoard[row][col] == 0):
@@ -112,8 +120,8 @@ def isValid(data, row, col):
 #inspired by floodfill
     
 def getSectionSize(data, row, col):
+    #checks each side of each block if not already visited
     data.visited.add((row, col))
-
     if(checkColor(data, row, col, row, col+1)): #right
         if(not (row, col+1) in data.visited):
             getSectionSize(data, row, col+1)
@@ -129,6 +137,9 @@ def getSectionSize(data, row, col):
     return
     
 def removeSection(data, row, col):
+    #remove selected section if valid move (section has more than 1 block)
+    #add to score (EASY: number of blocks in section * (number-1),
+    #MEDIUM: number * number, HARD: number * (number+1))
     data.visited = set()
     getSectionSize(data, row, col)
     if (len(data.visited)>1):
@@ -140,6 +151,7 @@ def removeSection(data, row, col):
             data.score += len(data.visited) * len(data.visited)
         elif (data.level == "HARD"):
             data.score += len(data.visited) * (len(data.visited) + 1)
+            
 def fillBoard(data, row, col):
     #fill down
     for col in range(data.size):
@@ -167,6 +179,7 @@ def fillBoard(data, row, col):
             data.gameBoard[row][col] = newBoard[row][col]
             
 def checkGameOver(data):
+    #if no more valid moves and still blocks left
     max = 1
     gameOver = True
     for row in range(data.size):
@@ -180,6 +193,7 @@ def checkGameOver(data):
     data.gameOver = gameOver
     
 def checkBoardFinished(data):
+    #if no more blocks left
     boardFinished = True
     for row in range(data.size):
         for col in range(data.size):
@@ -200,12 +214,12 @@ def playMousePressed(event, data):
 
 def playTimerFired(data):
     if (not data.gameOver):
+        #continue generating boards until game over
         if(data.boardFinished):
             data.game += 1
             generateBoard(data)
     else:
+        #game over screen and set high score
         data.mode = "playGameOver"
         if (data.score>data.highScore):
             data.highScore = data.score
-
-    

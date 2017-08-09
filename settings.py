@@ -31,13 +31,16 @@ def drawSettings(canvas, data):
             
 def settingsMousePressed(event, data):
     if(event.x>data.leftX and event.x < data.rightX):
+        #go back to board
         if (event.y >data.unpauseY1 and event.y<data.unpauseY2):
             data.mode = "play"
+        #reset play game variables and go back to board
         elif (event.y >data.restartY1 and event.y<data.restartY2):
             data.mode = "play"
             data.score = 0
             data.game = 0
             generateBoard(data)
+        #go back to home screen
         elif (event.y >data.exitY1 and event.y<data.exitY2):
             data.mode = "homeScreen"
             data.score = 0
