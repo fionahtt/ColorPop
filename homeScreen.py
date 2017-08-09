@@ -20,6 +20,11 @@ def initHomeScreen(data):
     data.timedX2 = 248
     data.timedY2 = 629
     
+    data.tutorialX1 = 366
+    data.tutorialY1 = 472
+    data.tutorialX2 = 522
+    data.tutorialY2 = 629
+    
 def homeMousePressed(event, data):
     if (event.x>=256 and event.x <= 358 and event.y >=220 and event.y <=327):
         data.mode = "levelChooser"
@@ -29,7 +34,8 @@ def homeMousePressed(event, data):
         data.boards = 0
         data.time = 300
         generateBoard(data)
-        
+    elif (event.x>=data.tutorialX1 and event.x <= data.tutorialX2 and event.y >=data.tutorialY1 and event.y <=data.tutorialY2):
+        data.mode = "tutorial"
 
 def drawHomeScreen(canvas, data):
     title= PhotoImage(file = "colorpoptitle.gif")

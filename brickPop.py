@@ -14,6 +14,7 @@ from playGameOver import *
 from timedGameBoard import *
 from timedSettings import *
 from timedGameOver import *
+from tutorial import *
 
 #framework from 15-112 course notes
 
@@ -30,6 +31,7 @@ def init(data):
     initSettings(data)
     initplayGameOver(data)
     initTimedBoard(data)
+    initTutorial(data)
 
 ##################    
 #MAIN CONTROLLERS    
@@ -54,6 +56,8 @@ def mousePressed(event, data):
         timedSettingsMousePressed(event, data)
     elif (data.mode == "timedGameOver"):
         timedGameOverMousePressed(event, data)
+    elif (data.mode == "tutorial"):
+        tutorialMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
@@ -79,6 +83,8 @@ def redrawAll(canvas, data):
         drawTimedBoard(canvas, data)
     elif (data.mode == "timedGameOver"):
         drawTimedGameOver(canvas, data)
+    elif (data.mode == "tutorial"):
+        drawTutorial(canvas, data)
 
 #############################
 #MAIN RUN        
