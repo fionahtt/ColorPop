@@ -18,6 +18,7 @@ def timedSettingsMousePressed(event, data):
             data.mode = "timed"
             data.boards = 0
             data.level = "EASY"
+            data.time = 300
             generateBoard(data)
         elif (event.y >data.exitY1 and event.y<data.exitY2):
             data.mode = "homeScreen"

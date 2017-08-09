@@ -28,32 +28,29 @@ def initGameBoard(data):
     #generateBoard(data)
     
 def drawGameBoard(canvas, data):
-    if (data.gameOver):
-        data.mode = "playGameOver"
-    else:
-        drawLabels(canvas, data)
-        for r in range(data.size):
-            for c in range(data.size):
-                color = data.gameBoard[r][c]
-                if (color == "pink"):
-                    color = "#F18D9E"
-                elif(color == "yellow"):
-                    color = "#F5E356"
-                elif(color == "turquoise"):
-                    color = "#5BC8AC"
-                elif(color == "green"):
-                    color = "#9BC01C"
-                elif (color == "blue"):
-                    color = "#4897D8"
-                elif (color == "lavender"):
-                    color = "#9A9EAB"
-                elif (color == "orange"):
-                    color = "#F9A603"
-                else:
-                    color = "white"
-                    
-                canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
-            
+    drawLabels(canvas, data)
+    for r in range(data.size):
+        for c in range(data.size):
+            color = data.gameBoard[r][c]
+            if (color == "pink"):
+                color = "#F18D9E"
+            elif(color == "yellow"):
+                color = "#F5E356"
+            elif(color == "turquoise"):
+                color = "#5BC8AC"
+            elif(color == "green"):
+                color = "#9BC01C"
+            elif (color == "blue"):
+                color = "#4897D8"
+            elif (color == "lavender"):
+                color = "#9A9EAB"
+            elif (color == "orange"):
+                color = "#F9A603"
+            else:
+                color = "white"
+                
+            canvas.create_rectangle(data.startX + (c*data.blockSize) + (c*data.margin), data.startY + (r*data.blockSize) + (r*data.margin), data.startX + ((c+1)*data.blockSize) + (c*data.margin), data.startY + ((r+1)*data.blockSize) + (r*data.margin), fill = color, outline = "")
+        
 def drawLabels(canvas, data):
     settings= PhotoImage(file = "settings.gif")
     label = Label(image=settings)
@@ -203,7 +200,7 @@ def playTimerFired(data):
             data.game += 1
             generateBoard(data)
     else:
-        data.score = 0
+        data.mode = "playGameOver"
         if (data.score>data.highScore):
             data.highScore = data.score
 

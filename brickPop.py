@@ -48,9 +48,10 @@ def mousePressed(event, data):
         playGameOverMousePressed(event, data)
     elif (data.mode == "timed"):
         timedMousePressed(event, data)
-        #generateBoard(data)
     elif(data.mode == "timedSettings"):
         timedSettingsMousePressed(event, data)
+    elif (data.mode == "timedGameOver"):
+        timedGameOverMousePressed(event, data)
 
 def keyPressed(event, data):
     pass
@@ -74,6 +75,8 @@ def redrawAll(canvas, data):
         drawPlayGameOver(canvas, data)
     elif (data.mode == "timed"):
         drawTimedBoard(canvas, data)
+    elif (data.mode == "timedGameOver"):
+        drawTimedGameOver(canvas, data)
 
 #############################
 #MAIN RUN        

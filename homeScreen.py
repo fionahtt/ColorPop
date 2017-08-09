@@ -27,6 +27,7 @@ def homeMousePressed(event, data):
         data.mode = "timed"
         data.level = "EASY"
         data.boards = 0
+        data.time = 300
         generateBoard(data)
         
 

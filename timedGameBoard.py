@@ -11,9 +11,10 @@ from playGameBoard import *
 
 def initTimedBoard(data):
     initGameBoard(data)
-    data.time = 5
+    data.time = 300
     data.boards = 0
     data.level = "EASY"
+    data.mostBoards = 0
     
 def drawTimedBoard(canvas, data):
     if (data.gameOver):
@@ -48,7 +49,8 @@ def drawTimedLabels(canvas, data):
     label.image = settings
     label.pack()
     canvas.create_image(275, 30, anchor = NW, image = label.image)
-    canvas.create_text(30, 50, anchor = NW, text = "TIME: " + str(data.time), fill = "black", font = "Verdana 20")
+    time = str(int(data.time)//60) + ":" + str(int(data.time)%60)
+    canvas.create_text(30, 50, anchor = NW, text = "TIME: " + time, fill = "black", font = "Verdana 20")
     canvas.create_text(400, 50, anchor = NW, text = "BOARDS: " + str(data.boards), fill = "black", font = "Verdana 20")
     
             
@@ -91,14 +93,18 @@ def timedMousePressed(event, data):
 
 def timedTimerFired(data):
     if (not data.gameOver):
+        data.time -= 0.1
         if(data.boardFinished):
             data.boards += 1
-            if(data.boards >5 and data.boards <11):
+            if(data.boards >4 and data.boards <10):
                 data.level = "MEDIUM"
-            elif(data.boards>10):
+            elif(data.boards>9):
                 data.level = "HARD"
             generateBoard(data)
         elif (checkNoMoreMoves(data)):
             generateBoard(data)
+    else:
+        #check for most boards
+        data.mode = "timedGameOver"
 
     
