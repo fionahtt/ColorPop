@@ -4,4 +4,4 @@ In Color Pop, I added different levels of difficulty based on number of colors o
 
 To run Color Pop, just run the file colorPop.py, which has imported all the other files into it.
 
-Video Demonstration: www.youtube.com/watch?v=R9KiJnZxJ3o&t=9s
+Video Demonstration: www.youtube.com/watch?v=R9KiJnZxJ3o
